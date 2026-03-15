@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master English Tenses - Learning Guide</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%);
+min-height:100vh;
+color:#1f2937;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.header{
+text-align:center;
+margin-bottom:40px;
+color:white;
+}
+
+.header h1{
+font-size:2.5rem;
+font-weight:700;
+margin-bottom:10px;
+text-shadow:0 4px 8px rgba(0,0,0,0.3);
+}
+
+.header p{
+font-size:1.2rem;
+opacity:0.9;
+}
+
+.nav-btn{
+display:inline-block;
+background:#ef4444;
+color:white;
+padding:15px 30px;
+border-radius:50px;
+text-decoration:none;
+font-weight:600;
+font-size:1.1rem;
+transition:all 0.3s ease;
+box-shadow:0 8px 25px rgba(239,68,68,0.4);
+margin-top:20px;
+margin-right:10px;
+}
+
+.nav-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 35px rgba(239,68,68,0.6);
+}
+
+.tenses-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+margin-bottom:40px;
+}
+
+.tense-card{
+background:white;
+border-radius:20px;
+padding:30px;
+cursor:pointer;
+transition:all 0.4s;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+position:relative;
+overflow:hidden;
+}
+
+.tense-card::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:5px;
+background:linear-gradient(90deg,#ef4444,#f59e0b,#10b981,#3b82f6);
+}
+
+.tense-card:hover{
+transform:translateY(-15px) scale(1.02);
+box-shadow:0 25px 50px rgba(0,0,0,0.2);
+}
+
+.tense-card h3{
+font-size:1.5rem;
+font-weight:700;
+margin-bottom:15px;
+color:#1e40af;
+}
+
+.tense-card p{
+color:#6b7280;
+line-height:1.6;
+}
+
+.detail-panel{
+background:white;
+border-radius:20px;
+padding:40px;
+margin:20px 0;
+max-height:70vh;
+overflow-y:auto;
+box-shadow:0 20px 60px rgba(0,0,0,0.15);
+display:none;
+animation:slideIn 0.5s ease;
+}
+
+.detail-panel.active{
+display:block;
+}
+
+@keyframes slideIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.detail-panel h2{
+color:#1e40af;
+font-size:2.2rem;
+margin-bottom:30px;
+text-align:center;
+border-bottom:4px solid #3b82f6;
+padding-bottom:15px;
+}
+
+.detail-section{
+margin-bottom:30px;
+}
+
+.detail-section h3{
+color:#1e40af;
+font-size:1.3rem;
+margin-bottom:15px;
+}
+
+.detail-section ul{
+list-style:none;
+}
+
+.detail-section li{
+background:#f8fafc;
+margin:8px 0;
+padding:12px 20px;
+border-radius:10px;
+border-left:4px solid #3b82f6;
+}
+
+.structure{
+background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+padding:20px;
+border-radius:15px;
+font-size:1.1rem;
+font-weight:600;
+text-align:center;
+border:2px solid #3b82f6;
+}
+
+.close-btn{
+position:absolute;
+top:20px;
+right:20px;
+background:#ef4444;
+color:white;
+border:none;
+width:40px;
+height:40px;
+border-radius:50%;
+cursor:pointer;
+font-size:1.2rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <a href="index.html" class="nav-btn">Home</a>
+
+    <div class="header">
+<h1>🎓 Master English Tenses</h1>
+<p>Interactive Learning Guide</p>
+
+<a href="test.html" class="nav-btn">Easy</a>
+<a href="medium.html" class="nav-btn">Medium</a>
+<a href="difficult.html" class="nav-btn">Difficult</a>
+
+</div>
+
+<div class="tenses-grid" id="tensesGrid"></div>
+
+<div class="detail-panel" id="detailPanel">
+<button class="close-btn" onclick="closeDetail()">×</button>
+<div id="tenseContent"></div>
+</div>
+
+</div>
+
+<script>
+
+const tensesData = [
+
+{
+name:"Present Simple",
+structure:"Subject + V1 (+s/es)",
+uses:["Daily routines","Habits","General truths","Permanent situations"],
+why:"To describe actions that happen regularly or facts that are always true.",
+explanation:"Present Simple tense is used when we talk about habits, routines, and things that happen regularly. It is also used for facts that are always true, scientific truths, and general statements. The verb usually stays in its base form, but for third person singular (he, she, it) we add 's' or 'es'.",
+examples:[
+"I wake up at 7 AM.",
+"She plays football.",
+"The sun rises in the east.",
+"They live in Chennai."
+]
+},
+
+{
+name:"Present Continuous",
+structure:"Subject + am/is/are + V-ing",
+uses:["Actions happening now","Temporary situations","Future arrangements"],
+why:"To describe actions that are happening at the moment of speaking.",
+explanation:"Present Continuous tense is used to talk about actions that are happening right now or around the current time. It is formed using 'am', 'is', or 'are' followed by the verb ending with 'ing'. It is also used for temporary actions and planned future events.",
+examples:[
+"I am reading a book.",
+"She is cooking dinner.",
+"They are studying now.",
+"We are meeting tomorrow."
+]
+},
+
+{
+name:"Present Perfect",
+structure:"Subject + have/has + V3",
+uses:["Life experiences","Recently completed actions","Actions connected to the present"],
+why:"To connect past actions with the present moment.",
+explanation:"Present Perfect tense is used for actions that happened in the past but are important now. The exact time is usually not mentioned. It is formed using 'have' or 'has' with the past participle (V3) of the verb.",
+examples:[
+"I have finished my homework.",
+"She has visited London.",
+"They have just arrived.",
+"We have seen that movie."
+]
+},
+
+{
+name:"Present Perfect Continuous",
+structure:"Subject + have/has + been + V-ing",
+uses:["Actions continuing until now","Duration of actions"],
+why:"To emphasize how long an action has been happening.",
+explanation:"Present Perfect Continuous tense is used to describe actions that started in the past and are still continuing now. It focuses on the duration of the action. It is formed using 'have/has been' + verb with 'ing'.",
+examples:[
+"I have been studying for 3 hours.",
+"She has been working since morning.",
+"They have been playing football.",
+"We have been waiting for you."
+]
+},
+
+{
+name:"Past Simple",
+structure:"Subject + V2",
+uses:["Completed past actions","Past habits","Events that happened at a specific time"],
+why:"To talk about actions that started and finished in the past.",
+explanation:"Past Simple tense describes actions that happened and finished in the past. Usually the time is mentioned such as yesterday, last year, or ago. Regular verbs add 'ed' while irregular verbs have different forms.",
+examples:[
+"I visited Paris last year.",
+"She studied yesterday.",
+"They watched a movie.",
+"We went to school."
+]
+},
+
+{
+name:"Past Continuous",
+structure:"Subject + was/were + V-ing",
+uses:["Actions in progress in the past","Interrupted actions","Background descriptions"],
+why:"To describe actions that were happening at a specific moment in the past.",
+explanation:"Past Continuous tense is used to describe an action that was happening in the middle of another action in the past. It is formed with 'was' or 'were' + verb with 'ing'.",
+examples:[
+"I was reading when she called.",
+"They were playing football.",
+"She was studying all night.",
+"We were walking in the park."
+]
+},
+
+{
+name:"Past Perfect",
+structure:"Subject + had + V3",
+uses:["Action completed before another past action"],
+why:"To show which past action happened first.",
+explanation:"Past Perfect tense is used when we talk about two actions in the past and want to show which one happened earlier. It is formed using 'had' + past participle.",
+examples:[
+"I had finished before she arrived.",
+"They had left already.",
+"She had eaten dinner.",
+"We had completed the project."
+]
+},
+
+{
+name:"Past Perfect Continuous",
+structure:"Subject + had + been + V-ing",
+uses:["Duration before another past event"],
+why:"To emphasize how long an action had been happening.",
+explanation:"Past Perfect Continuous describes how long an action continued before another action in the past happened. It emphasizes the duration of the action.",
+examples:[
+"I had been waiting for 2 hours.",
+"She had been studying all night.",
+"They had been traveling for weeks.",
+"We had been working hard."
+]
+},
+
+{
+name:"Future Simple",
+structure:"Subject + will + V1",
+uses:["Predictions","Promises","Spontaneous decisions"],
+why:"To talk about future actions and predictions.",
+explanation:"Future Simple tense is used when we talk about decisions made at the moment of speaking, predictions about the future, and promises.",
+examples:[
+"I will call you later.",
+"She will help you.",
+"They will arrive tomorrow.",
+"We will win the match."
+]
+},
+
+{
+name:"Future Continuous",
+structure:"Subject + will + be + V-ing",
+uses:["Actions that will be happening at a certain future time"],
+why:"To describe actions that will be in progress in the future.",
+explanation:"Future Continuous tense describes actions that will be happening at a specific time in the future.",
+examples:[
+"I will be working at 5 PM.",
+"They will be traveling tomorrow.",
+"She will be studying tonight.",
+"We will be playing football."
+]
+},
+
+{
+name:"Future Perfect",
+structure:"Subject + will + have + V3",
+uses:["Completed action before future time"],
+why:"To describe actions that will be completed before a certain time in the future.",
+explanation:"Future Perfect tense is used to describe an action that will finish before a particular time in the future.",
+examples:[
+"I will have finished by 6 PM.",
+"She will have arrived by tomorrow.",
+"They will have completed the work.",
+"We will have built the house."
+]
+},
+
+{
+name:"Future Perfect Continuous",
+structure:"Subject + will + have + been + V-ing",
+uses:["Duration until a future moment"],
+why:"To emphasize how long an action will continue until a future time.",
+explanation:"Future Perfect Continuous tense focuses on the duration of an action that will continue until a certain future point.",
+examples:[
+"I will have been working here for 10 years.",
+"She will have been studying for hours.",
+"They will have been traveling for weeks.",
+"We will have been waiting for you."
+]
+}
+
+];
+
+function createTenseCards(){
+
+const grid=document.getElementById("tensesGrid");
+
+tensesData.forEach(tense=>{
+
+const card=document.createElement("div");
+card.className="tense-card";
+
+card.innerHTML=`
+<h3>${tense.name}</h3>
+<p>${tense.structure}</p>
+`;
+
+card.onclick=()=>showTenseDetail(tense);
+
+grid.appendChild(card);
+
+});
+
+}
+
+function showTenseDetail(tense){
+
+const panel=document.getElementById("detailPanel");
+const content=document.getElementById("tenseContent");
+
+content.innerHTML=`
+
+<h2>${tense.name}</h2>
+
+<div class="detail-section">
+<h3>📝 Structure</h3>
+<div class="structure">${tense.structure}</div>
+</div>
+
+<div class="detail-section">
+<h3>📍 Where it is used</h3>
+<ul>${tense.uses.map(use=>`<li>${use}</li>`).join("")}</ul>
+</div>
+
+<div class="detail-section">
+<h3>📘 Explanation</h3>
+<p style="background:#fff7ed;padding:20px;border-radius:12px;border-left:5px solid #f59e0b;">
+${tense.explanation}
+</p>
+</div>
+
+<div class="detail-section">
+<h3>❓ Why we use it</h3>
+<p style="background:#f0fdf4;padding:20px;border-radius:12px;border-left:5px solid #10b981;">
+${tense.why}
+</p>
+</div>
+
+<div class="detail-section">
+<h3>💡 Examples</h3>
+<ul>${tense.examples.map(ex=>`<li>"${ex}"</li>`).join("")}</ul>
+</div>
+
+`;
+
+panel.classList.add("active");
+
+}
+
+function closeDetail(){
+document.getElementById("detailPanel").classList.remove("active");
+}
+
+createTenseCards();
+
+</script>
+
+</body>
+</html>

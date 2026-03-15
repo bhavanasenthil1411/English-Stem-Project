@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Tenses Quiz - Test Your Knowledge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(16,185,129,0.4);
+            margin-top: 15px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(16,185,129,0.6);
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 12px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 6px solid #3b82f6;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-number {
+            background: #3b82f6;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 18px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59,130,246,0.15);
+        }
+
+        .option-btn.selected {
+            background: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+        }
+
+        .feedback.incorrect {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        .feedback-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .correct-answer {
+            font-weight: 700;
+            color: #166534;
+            margin: 10px 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .results {
+            text-align: center;
+            display: none;
+        }
+
+        .score {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .result-excellent { background: #dcfce7; color: #166534; border: 3px solid #22c55e; }
+        .result-good { background: #fef3c7; color: #92400e; border: 3px solid #f59e0b; }
+        .result-average { background: #fef7ff; color: #7c3aed; border: 3px solid #a855f7; }
+        .result-poor { background: #fef2f2; color: #991b1b; border: 3px solid #ef4444; }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .easy { background: #dcfce7; color: #166534; }
+        .medium { background: #fef3c7; color: #92400e; }
+        .hard { background: #fef2f2; color: #991b1b; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .quiz-container { padding: 25px; }
+            .question-text { font-size: 1.1rem; }
+            .controls { flex-direction: column; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Tenses Quiz</h1>
+            <p>Test your knowledge with 10 challenging questions!</p>
+            <a href="tenses.html" class="nav-btn">📚 Back to Learning</a>
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="controls" id="controls">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+                <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" style="display: none;">Submit Quiz</button>
+            </div>
+        </div>
+
+        <div class="quiz-container results" id="results">
+            <h2>🎉 Quiz Complete!</h2>
+            <div class="score" id="finalScore"></div>
+            <div class="result-message" id="resultMessage"></div>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Your performance: <span id="scoreText"></span></p>
+            <div class="controls">
+                <a href="test.html" class="btn btn-primary">🔄 Take Quiz Again</a>
+                <a href="tenses.html" class="btn btn-secondary">📚 Back to Learning</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // EASY (3 questions)
+            {
+                question: "She ____ to school every day.",
+                options: ["go", "goes", "going"],
+                correct: 1,
+                explanation: "\"Every day\" shows a routine, so Present Simple tense is used. With 'she', the verb becomes 'goes'.",
+                difficulty: "easy"
+            },
+            {
+                question: "Look! It ____ outside.",
+                options: ["rain", "rains", "is raining"],
+                correct: 2,
+                explanation: "\"Look!\" indicates something happening right now, so Present Continuous ('is raining') is correct.",
+                difficulty: "easy"
+            },
+            {
+                question: "I ____ Paris three times.",
+                options: ["visit", "visited", "have visited"],
+                correct: 2,
+                explanation: "Present Perfect ('have visited') connects past experience with present moment.",
+                difficulty: "easy"
+            },
+
+            // INTERMEDIATE (3 questions)
+            {
+                question: "By next year, she ____ here for 10 years.",
+                options: ["will work", "will have worked", "will be working"],
+                correct: 1,
+                explanation: "Future Perfect ('will have worked') shows completion before a future time.",
+                difficulty: "easy"
+            },
+            {
+                question: "While I ____ TV, the phone ____.",
+                options: ["watched / rang", "was watching / rang", "watch / ring"],
+                correct: 1,
+                explanation: "Past Continuous + Past Simple shows interrupted action.",
+                difficulty: "easy"
+            },
+            {
+                question: "They ____ football when it started to rain.",
+                options: ["played", "were playing", "have played"],
+                correct: 1,
+                explanation: "Past Continuous ('were playing') for background action interrupted by another event.",
+                difficulty: "easy"
+            },
+
+            // HARD (4 questions)
+            {
+                question: "By the time you arrive, we ____ dinner.",
+                options: ["will eat", "will have eaten", "will be eating"],
+                correct: 1,
+                explanation: "Future Perfect ('will have eaten') - action completed before another future action.",
+                difficulty: "easy"
+            },
+            {
+                question: "She ____ for hours when she finally found her keys.",
+                options: ["looked", "was looking", "had been looking"],
+                correct: 2,
+                explanation: "Past Perfect Continuous emphasizes duration before another past action.",
+                difficulty: "easy"
+            },
+            {
+                question: "Don't call me at 8 PM, I ____.",
+                options: ["will sleep", "will be sleeping", "will have slept"],
+                correct: 1,
+                explanation: "Future Continuous for action in progress at a specific future time.",
+                difficulty: "easy"
+            },
+            {
+                question: "This time tomorrow, I ____ to New York.",
+                options: ["fly", "will fly", "will be flying"],
+                correct: 2,
+                explanation: "Future Continuous for action in progress at a specific future moment.",
+                difficulty: "easy"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        function initQuiz() {
+            displayQuestion();
+            updateProgress();
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const question = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question-card" style="animation-delay: ${currentQuestion * 0.1}s">
+                    <div class="question-header">
+                        <div class="question-number">${currentQuestion + 1}</div>
+                        <div>
+                            <div class="question-text">${question.question}</div>
+                            <span class="difficulty-badge ${question.difficulty}">${question.difficulty.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="options">
+                        ${question.options.map((option, index) => 
+                            `<button class="option-btn" onclick="selectOption(${index})">${option}</button>`
+                        ).join('')}
+                    </div>
+                    
+                    <div class="feedback" id="feedback${currentQuestion}"></div>
+                </div>
+            `;
+
+            updateControls();
+        }
+
+        function selectOption(index) {
+            const question = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-btn');
+            const feedback = document.getElementById(`feedback${currentQuestion}`);
+            
+            // Remove previous selections
+            buttons.forEach((btn, i) => {
+                btn.classList.remove('selected');
+                if (i === index) btn.classList.add('selected');
+            });
+
+            // Show feedback
+            setTimeout(() => {
+                feedback.innerHTML = `
+                    <div class="feedback-icon">${index === question.correct ? '✔' : '❌'}</div>
+                    <div>${index === question.correct ? 'Correct!' : 'Incorrect'}</div>
+                    ${index !== question.correct ? `<div class="correct-answer">Correct: ${question.options[question.correct]}</div>` : ''}
+                    <div style="margin-top: 10px; font-size: 0.95rem; line-height: 1.5;">${question.explanation}</div>
+                `;
+                
+                feedback.className = `feedback ${index === question.correct ? 'correct' : 'incorrect'}`;
+                feedback.style.display = 'block';
+                
+                if (index === question.correct && !answers[currentQuestion]) {
+                    score++;
+                    answers[currentQuestion] = true;
+                }
+                
+                updateProgress();
+            }, 300);
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateControls() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+            
+            let resultClass, message, scoreText;
+            if (percentage >= 90) {
+                resultClass = 'result-excellent';
+                message = '👏 Excellent!';
+                scoreText = 'Master of Tenses!';
+            } else if (percentage >= 70) {
+                resultClass = 'result-good';
+                message = '👍 Great job!';
+                scoreText = 'Very Good!';
+            } else if (percentage >= 40) {
+                resultClass = 'result-average';
+                message = '📚 Good effort!';
+                scoreText = 'Average';
+            } else {
+                resultClass = 'result-poor';
+                message = '💪 Keep practicing!';
+                scoreText = 'Needs Improvement';
+            }
+            
+            document.getElementById('resultMessage').className = `result-message ${resultClass}`;
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('scoreText').textContent = scoreText;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextQuestion();
+            if (e.key === 'ArrowLeft') previousQuestion();
+            if (e.key === 'Enter' && document.querySelector('.option-btn:not(.selected)')) {
+                const firstOption = document.querySelector('.option-btn:not(.selected)');
+                firstOption.click();
+            }
+        });
+
+        // Initialize quiz when page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
