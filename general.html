@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Escape the Misinformation</title>
+<style>
+body{
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  font-family: Arial, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin:0;
+}
+.container{
+  background:#1c1c1c;
+  padding:40px;
+  border-radius:20px;
+  width:600px;
+  text-align:center;
+}
+button{
+  padding:15px 35px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#00e5ff;
+  cursor:pointer;
+  margin-top:20px;
+}
+.option{
+  display:block;
+  padding:12px;
+  margin:10px 0;
+  border:2px solid #444;
+  border-radius:10px;
+  cursor:pointer;
+}
+.option:hover{
+  background:#00e5ff;
+  color:black;
+}
+.score{
+  font-size:50px;
+  color:#00ff9d;
+  margin:20px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="quizContainer">
+
+<h1>Escape the Misinformation</h1>
+<p>
+In today's digital world, information spreads quickly through social media and news websites. Not all information is reliable. Some statements contain exaggerated claims, misleading headlines, or grammar clues that indicate misinformation.
+</p>
+<p>
+This quiz challenges you to identify whether statements are correct, incorrect, or resemble fake news. Carefully observe language, tone, and logic!
+</p>
+
+<button id="startBtn">Start Quiz</button>
+
+</div>
+
+<script>
+const questions = [
+  {"question":"Researchers have published their findings yesterday.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Scientists discovered a new species of butterfly in the Amazon rainforest.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"BREAKING NEWS!!! Miracle fruit cures all diseases instantly!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Researchers have been studying climate change for ten years.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"A blog claims a magical herb guarantees perfect health.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Scientists discovered water on Mars in 2015.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Scientists have discovered water on Mars in 2015.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"The professor explains the results yesterday.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Researchers will present their findings next month.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"SHOCKING!!! This drink will make you live forever!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The Earth revolves around the Sun.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"The sun rises in the west.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Water freezes at 0°C.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Humans can breathe in space without equipment.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Light travels faster than sound.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"BREAKING!!! Chocolate cures all diseases overnight.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Scientists say drinking water is essential for health.","options":["Real News Style","Fake News Style"],"answer":"Real News Style"},
+  {"question":"Eating one apple daily guarantees you will live 150 years.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"WHO releases report on global vaccination programs.","options":["Real News Style","Fake News Style"],"answer":"Real News Style"},
+  {"question":"Miracle diet pill melts 20kg fat in one week!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"NASA confirms a new exoplanet in the habitable zone.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Scientists claim chocolate prevents aging completely.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The COVID-19 vaccine reduces the risk of severe illness.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Aliens built the pyramids according to a viral article.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The Great Wall of China is visible from the Moon.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Researchers found microplastics in Arctic ice samples.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"This miraculous juice will cure diabetes in 7 days!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Scientists observe gravitational waves from colliding black holes.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Eating carrots guarantees perfect eyesight overnight.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Rainforests absorb CO2 and help reduce global warming.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"The Moon orbits the Earth approximately once every 27 days.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Humans can photosynthesize like plants.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"BREAKING!!! Drinking lemon water burns fat instantly!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Scientists have cloned a sheep in 1996.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"This secret crystal will give you unlimited energy!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The Pacific Ocean is the largest ocean on Earth.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Eating garlic prevents all diseases forever.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The speed of light is approximately 3 × 10^8 m/s.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Aliens communicate with humans through social media posts.","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Mount Everest is the tallest mountain above sea level.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"BREAKING!!! This miracle cream removes wrinkles in 24 hours!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"The human body has 206 bones.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Drinking coffee will make you immortal!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Venus is the hottest planet in the solar system.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"SHOCKING!!! Wear this bracelet to gain superpowers!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Sharks are mammals.","options":["Correct","Incorrect"],"answer":"Incorrect"},
+  {"question":"Researchers discovered a new antibiotic in soil bacteria.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"Eating chocolate cures depression instantly!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"},
+  {"question":"Lightning is hotter than the surface of the Sun.","options":["Correct","Incorrect"],"answer":"Correct"},
+  {"question":"BREAKING!!! This app will read your mind and predict the future!!!","options":["Real News Style","Fake News Style"],"answer":"Fake News Style"}
+];
+let currentIndex = 0;
+let score = 0;
+
+const container = document.getElementById("quizContainer");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.onclick = function(){
+  showQuestion();
+};
+
+function showQuestion(){
+  if(currentIndex >= questions.length){
+    container.innerHTML = `
+      <h1>Quiz Completed 🎉</h1>
+      <div class="score">${score} / ${questions.length}</div>
+      <button onclick="restartQuiz()">Play Again</button>
+    `;
+    return;
+  }
+
+  const q = questions[currentIndex];
+  let optionsHtml = "";
+  q.options.forEach(opt=>{
+    optionsHtml += `<label class="option">
+      <input type="radio" name="answer" value="${opt}"> ${opt}
+    </label>`;
+  });
+
+  container.innerHTML = `
+    <h2>Question ${currentIndex+1} of ${questions.length}</h2>
+    <p>${q.question}</p>
+    <form id="quizForm">
+      ${optionsHtml}
+      <button type="submit">Next</button>
+    </form>
+  `;
+
+  document.getElementById("quizForm").onsubmit = function(e){
+    e.preventDefault();
+    const selected = document.querySelector('input[name="answer"]:checked');
+    if(!selected) return alert("Please select an answer!");
+    if(selected.value === q.answer) score++;
+    currentIndex++;
+    showQuestion();
+  };
+}
+
+function restartQuiz(){
+  currentIndex = 0;
+  score = 0;
+  container.innerHTML = `
+    <h1>Escape the Misinformation</h1>
+    <p>
+    In today's digital world, information spreads quickly through social media and news websites. Not all information is reliable. Some statements contain exaggerated claims, misleading headlines, or grammar clues that indicate misinformation.
+    </p>
+    <p>
+    This quiz challenges you to identify whether statements are correct, incorrect, or resemble fake news. Carefully observe language, tone, and logic!
+    </p>
+    <button id="startBtn">Start Quiz</button>
+  `;
+  document.getElementById("startBtn").onclick = function(){
+    showQuestion();
+  }
+}
+</script>
+
+</body>
+</html>
